@@ -40,12 +40,12 @@ ui <- fluidPage(
         h4("You need to guess: "),
         h5(textOutput("color_name")),
         h4("Your Guess:"),
-        colourInput("guess_color", "Pick a color:", "#FF0000"),
+        colourInput("guess_color", "Pick a color:", "#FFFFFF"),
         div(
           style = "height: 50px; border: 2px solid #ccc; border-radius: 5px; margin: 10px 0;",
           div(
             id = "guess_display",
-            style = "height: 100%; border-radius: 3px; background-color: #FF0000;"
+            style = "height: 100%; border-radius: 3px; background-color: #FFFFFF;"
           )
         ),
         br(),
@@ -110,14 +110,13 @@ server <- function(input, output, session) {
     values$last_distance <- NULL
     values$last_score <- NULL
 
-    # Update the target color display
+    # Reset color picker to white
+    updateColourInput(session, "guess_color", value = "#FFFFFF")
+
+    # Update the guess display to white
     session$sendCustomMessage(
       type = "runjs",
-      message = paste0(
-        "$('#target_color').css('background-color', '",
-        values$current_color$hex,
-        "');"
-      )
+      message = "$('#guess_display').css('background-color', '#FFFFFF');"
     )
   }
 
